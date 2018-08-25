@@ -8,20 +8,13 @@ CREATE TABLE users (
   PRIMARY KEY (id)
 );
 
-CREATE TABLE rooms (
-  id int AUTO_INCREMENT, 
-  name varchar (255),
-  PRIMARY KEY (id)
-);
-
 CREATE TABLE messages (
   id int AUTO_INCREMENT,
   user_id int,
   message varchar (255),
-  room_id int,
+  room varchar (255),
   PRIMARY KEY (id),
-  FOREIGN KEY (user_id) REFERENCES users(id),
-  FOREIGN KEY (room_id) REFERENCES rooms(id)
+  FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
 
