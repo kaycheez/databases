@@ -11,41 +11,41 @@ var db = mysql.createConnection({
   database: "chat"
 });
 
-let retrieveUsers = function(id) {
-  return new Promise((resolve, reject) => {
-    db.query(`select name from users where id = ${id}`, (err, results) => {
-      if (err) {
-        return reject(err);
-      } else {
-        resolve(results);
-      }
-    });
-  });
-};
+// let retrieveUsers = function(id) {
+//   return new Promise((resolve, reject) => {
+//     db.query(`select name from users where id = ${id}`, (err, results) => {
+//       if (err) {
+//         return reject(err);
+//       } else {
+//         resolve(results);
+//       }
+//     });
+//   });
+// };
 
-let retrieveMessages = function() {
-  return new Promise((resolve, reject) => {
-    db.query("select * from messages", (err, results) => {
-      if (err) {
-        return reject(err);
-      } else {
-        resolve(results);
-      }
-    });
-  });
-};
-let message = {};
+// let retrieveMessages = function() {
+//   return new Promise((resolve, reject) => {
+//     db.query("select * from messages", (err, results) => {
+//       if (err) {
+//         return reject(err);
+//       } else {
+//         resolve(results);
+//       }
+//     });
+//   });
+// };
+// let message = {};
 
-retrieveMessages()
-  .then(results => {
-    message.message = results[0].message;
-    message.room = results[0].room;
-    let userId = results[0].user_id;
-    return retrieveUsers(userId);
-  })
-  .then(userName => {
-    message.username = userName[0].name;
-    console.log(message);
-  });
+// retrieveMessages()
+//   .then(results => {
+//     message.message = results[0].message;
+//     message.room = results[0].room;
+//     let userId = results[0].user_id;
+//     return retrieveUsers(userId);
+//   })
+//   .then(userName => {
+//     message.username = userName[0].name;
+//     console.log(message);
+//   });
 
 module.exports = db;
