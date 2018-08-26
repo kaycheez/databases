@@ -1,4 +1,4 @@
-var models = require("../models");
+var models = require('../models');
 
 module.exports = {
   messages: {
@@ -9,12 +9,11 @@ module.exports = {
       // res.end(JSON.stringify(body))
     }, // a function which handles a get request for all messages
     post: function(req, res) {
-      console.log("are we here?");
       var message = req.body;
       models.messages.post(message, () => {
-        console.log("success to post");
+        console.log('success to post');
+        res.end();
       });
-      res.end();
     } // a function which handles posting a message to the database
   },
 
@@ -28,9 +27,8 @@ module.exports = {
     post: function(req, res) {
       let username = req.body;
       models.users.post(username.username, () => {
-        console.log("success");
+        res.end();
       });
-      res.end();
     }
   }
 };

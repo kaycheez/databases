@@ -1,4 +1,4 @@
-var db = require("../db");
+var db = require('../db');
 
 let retrieveUser = function(id, newMessage) {
   return new Promise((resolve, reject) => {
@@ -29,7 +29,7 @@ module.exports = {
   messages: {
     get: function(callback) {
       let promiseMessages;
-      let table = "messages";
+      let table = 'messages';
       retrieveAllFromTable(table).then(resultsMessages => {
         promiseMessages = resultsMessages.map(message => {
           let newMessage = {};
@@ -51,19 +51,16 @@ module.exports = {
     post: function(message, callback) {
       return new Promise((resolve, reject) => {
         db.query(
-          `select id from users where name = ${message.username}`,
+          `select id from users where name = '${message.username}'`,
           (err, results) => {
             if (err) {
-              console.log("ERORRRRRRR" + err);
               return reject(err);
             } else {
-              console.log("SUCCESSSSS" + results);
               resolve(results);
             }
           }
         );
       }).then(data => {
-        console.log("this is data" + data);
         if (data.length === 0) {
           // var user_id = message.username;
           db.query(
@@ -72,20 +69,23 @@ module.exports = {
               if (err) {
                 reject(err);
               } else {
-                console.log("post username success!");
+                console.log('post username success!');
               }
             }
           );
         }
         return db.query(
           `Insert into messages (user_id, message, room) values(
-            ${messages.user}, ${messages.message}, ${messages.room}
+            (select id from users where name = "${message.username}"), "${
+  message.message
+}", "${message.room}"
           )`,
           function(err, results) {
             if (err) {
+              console.log('error?????' + err);
               return callback(err);
             } else {
-              console.log("success!");
+              console.log(results);
               callback(null, results);
             }
           }
@@ -97,7 +97,7 @@ module.exports = {
   users: {
     // Ditto as above.
     get: function(callback) {
-      let table = "users";
+      let table = 'users';
       return retrieveAllFromTable(table).then(data => {
         callback(data);
       });
@@ -112,15 +112,13 @@ module.exports = {
     },
 
     post: function(user, callback) {
-      return db.query(`Insert into users (name) values(${user})`, function(
+      return db.query(`Insert into users (name) values('${user}')`, function(
         err,
         results
       ) {
         if (err) {
-          console.log("errorrrr" + err);
-          return callback(err);
+          callback(err);
         } else {
-          console.log("succccesss");
           callback(null, results);
         }
       });

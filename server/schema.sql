@@ -4,7 +4,7 @@ USE chat;
 
 CREATE TABLE users (
   id int AUTO_INCREMENT, 
-  name varchar (255),
+  name varchar (255) UNIQUE,
   PRIMARY KEY (id)
 );
 
